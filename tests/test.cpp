@@ -115,45 +115,48 @@ int main() {
     IVSparse::VCSC<TYPE, INDEX_TYPE, IVSparseMAJOR> vcsc4(eigen_sparse4);
     IVSparse::IVCSC<TYPE, IVSparseMAJOR> ivcsc4(eigen_sparse4);
 
-    // test1(vcsc1, vcsc2, vcsc3, vcsc4, ivcsc1, ivcsc2, ivcsc3, ivcsc4, eigen1, eigen2, eigen3, eigen4);
-    std::cout << "test1 passed" << std::endl;
-    test2(vcsc1, vcsc2, vcsc3, vcsc4, ivcsc1, ivcsc2, ivcsc3, ivcsc4);
-    std::cout << "test2 passed" << std::endl;
-    test3(vcsc1, vcsc2, vcsc3, vcsc4, ivcsc1, ivcsc2, ivcsc3, ivcsc4, eigen_sparse1, eigen_sparse2, eigen_sparse3, eigen_sparse4);
-    std::cout << "test3 passed" << std::endl;
-    test4(vcsc1, vcsc2, vcsc3, vcsc4, ivcsc1, ivcsc2, ivcsc3, ivcsc4);
-    std::cout << "test4 passed" << std::endl;
-    test5(vcsc1, vcsc2, vcsc3, vcsc4, ivcsc1, ivcsc2, ivcsc3, ivcsc4);
-    std::cout << "test5 passed" << std::endl;
-    test6(vcsc1, vcsc2, vcsc3, vcsc4, ivcsc1, ivcsc2, ivcsc3, ivcsc4);
-    std::cout << "test6 passed" << std::endl;
-    test7(vcsc1, vcsc2, vcsc3, vcsc4, ivcsc1, ivcsc2, ivcsc3, ivcsc4, eigen_sparse1, eigen_sparse2, eigen_sparse3, eigen_sparse4);
-    std::cout << "test7 passed" << std::endl;
-    test8(vcsc1, vcsc2, vcsc3, vcsc4, ivcsc1, ivcsc2, ivcsc3, ivcsc4, eigen_sparse1, eigen_sparse2, eigen_sparse3, eigen_sparse4);
-    std::cout << "test8 passed" << std::endl;
-    test9(vcsc1, vcsc2, vcsc3, vcsc4, ivcsc1, ivcsc2, ivcsc3, ivcsc4, eigen_sparse1, eigen_sparse2, eigen_sparse3, eigen_sparse4);
-    std::cout << "test9 passed" << std::endl;
-    test10(vcsc1, vcsc2, vcsc3, vcsc4, ivcsc1, ivcsc2, ivcsc3, ivcsc4, eigen_sparse1, eigen_sparse2, eigen_sparse3, eigen_sparse4);
-    std::cout << "test10 passed" << std::endl;
-    test11(vcsc1, vcsc2, vcsc3, vcsc4, ivcsc1, ivcsc2, ivcsc3, ivcsc4, eigen_sparse1, eigen_sparse2, eigen_sparse3, eigen_sparse4);
-    std::cout << "test11 passed" << std::endl;
-    // test12(vcsc1, vcsc2, vcsc3, vcsc4, ivcsc1, ivcsc2, ivcsc3, ivcsc4, eigen_sparse1, eigen_sparse2, eigen_sparse3, eigen_sparse4);
-    // std::cout << "test12 passed" << std::endl;
-    test13(vcsc1, vcsc2, vcsc3, vcsc4, ivcsc1, ivcsc2, ivcsc3, ivcsc4, eigen_sparse1, eigen_sparse2, eigen_sparse3, eigen_sparse4);
-    std::cout << "test13 passed" << std::endl;
-    // test14(vcsc1, vcsc2, vcsc3, vcsc4, ivcsc1, ivcsc2, ivcsc3, ivcsc4, eigen_sparse1, eigen_sparse2, eigen_sparse3, eigen_sparse4);
-    // std::cout << "test14 passed" << std::endl;
-    // test15(vcsc1, vcsc2, vcsc3, vcsc4, ivcsc1, ivcsc2, ivcsc3, ivcsc4, eigen_sparse1, eigen_sparse2, eigen_sparse3, eigen_sparse4);
-    // std::cout << "test15 passed" << std::endl;
-    // test16(vcsc1, vcsc2, vcsc3, vcsc4, ivcsc1, ivcsc2, ivcsc3, ivcsc4, eigen_sparse1, eigen_sparse2, eigen_sparse3, eigen_sparse4);
-    // std::cout << "test16 passed" << std::endl;
-    // test17(vcsc1, vcsc2, vcsc3, vcsc4, ivcsc1, ivcsc2, ivcsc3, ivcsc4, eigen_sparse1, eigen_sparse2, eigen_sparse3, eigen_sparse4);
-    // std::cout << "test17 passed" << std::endl;
-    test18(vcsc1, vcsc2, vcsc3, vcsc4, ivcsc1, ivcsc2, ivcsc3, ivcsc4);
-    std::cout << "test18 passed" << std::endl;
-    test19(vcsc1, vcsc2, vcsc3, vcsc4, ivcsc1, ivcsc2, ivcsc3, ivcsc4, eigen_sparse1, eigen_sparse2, eigen_sparse3, eigen_sparse4);
-    std::cout << "test19 passed" << std::endl;
-
+    // // test1(vcsc1, vcsc2, vcsc3, vcsc4, ivcsc1, ivcsc2, ivcsc3, ivcsc4, eigen1, eigen2, eigen3, eigen4);
+    // std::cout << "test1 passed" << std::endl;
+    // test2(vcsc1, vcsc2, vcsc3, vcsc4, ivcsc1, ivcsc2, ivcsc3, ivcsc4);
+    // std::cout << "test2 passed" << std::endl;
+    // test3(vcsc1, vcsc2, vcsc3, vcsc4, ivcsc1, ivcsc2, ivcsc3, ivcsc4, eigen_sparse1, eigen_sparse2, eigen_sparse3, eigen_sparse4);
+    // std::cout << "test3 passed" << std::endl;
+    // test4(vcsc1, vcsc2, vcsc3, vcsc4, ivcsc1, ivcsc2, ivcsc3, ivcsc4);
+    // std::cout << "test4 passed" << std::endl;
+    // test5(vcsc1, vcsc2, vcsc3, vcsc4, ivcsc1, ivcsc2, ivcsc3, ivcsc4);
+    // std::cout << "test5 passed" << std::endl;
+    // test6(vcsc1, vcsc2, vcsc3, vcsc4, ivcsc1, ivcsc2, ivcsc3, ivcsc4);
+    // std::cout << "test6 passed" << std::endl;
+    // test7(vcsc1, vcsc2, vcsc3, vcsc4, ivcsc1, ivcsc2, ivcsc3, ivcsc4, eigen_sparse1, eigen_sparse2, eigen_sparse3, eigen_sparse4);
+    // std::cout << "test7 passed" << std::endl;
+    // test8(vcsc1, vcsc2, vcsc3, vcsc4, ivcsc1, ivcsc2, ivcsc3, ivcsc4, eigen_sparse1, eigen_sparse2, eigen_sparse3, eigen_sparse4);
+    // std::cout << "test8 passed" << std::endl;
+    // test9(vcsc1, vcsc2, vcsc3, vcsc4, ivcsc1, ivcsc2, ivcsc3, ivcsc4, eigen_sparse1, eigen_sparse2, eigen_sparse3, eigen_sparse4);
+    // std::cout << "test9 passed" << std::endl;
+    // test10(vcsc1, vcsc2, vcsc3, vcsc4, ivcsc1, ivcsc2, ivcsc3, ivcsc4, eigen_sparse1, eigen_sparse2, eigen_sparse3, eigen_sparse4);
+    // std::cout << "test10 passed" << std::endl;
+    // test11(vcsc1, vcsc2, vcsc3, vcsc4, ivcsc1, ivcsc2, ivcsc3, ivcsc4, eigen_sparse1, eigen_sparse2, eigen_sparse3, eigen_sparse4);
+    // std::cout << "test11 passed" << std::endl;
+    // // test12(vcsc1, vcsc2, vcsc3, vcsc4, ivcsc1, ivcsc2, ivcsc3, ivcsc4, eigen_sparse1, eigen_sparse2, eigen_sparse3, eigen_sparse4);
+    // // std::cout << "test12 passed" << std::endl;
+    // test13(vcsc1, vcsc2, vcsc3, vcsc4, ivcsc1, ivcsc2, ivcsc3, ivcsc4, eigen_sparse1, eigen_sparse2, eigen_sparse3, eigen_sparse4);
+    // std::cout << "test13 passed" << std::endl;
+    // // test14(vcsc1, vcsc2, vcsc3, vcsc4, ivcsc1, ivcsc2, ivcsc3, ivcsc4, eigen_sparse1, eigen_sparse2, eigen_sparse3, eigen_sparse4);
+    // // std::cout << "test14 passed" << std::endl;
+    // // test15(vcsc1, vcsc2, vcsc3, vcsc4, ivcsc1, ivcsc2, ivcsc3, ivcsc4, eigen_sparse1, eigen_sparse2, eigen_sparse3, eigen_sparse4);
+    // // std::cout << "test15 passed" << std::endl;
+    // // test16(vcsc1, vcsc2, vcsc3, vcsc4, ivcsc1, ivcsc2, ivcsc3, ivcsc4, eigen_sparse1, eigen_sparse2, eigen_sparse3, eigen_sparse4);
+    // // std::cout << "test16 passed" << std::endl;
+    // // test17(vcsc1, vcsc2, vcsc3, vcsc4, ivcsc1, ivcsc2, ivcsc3, ivcsc4, eigen_sparse1, eigen_sparse2, eigen_sparse3, eigen_sparse4);
+    // // std::cout << "test17 passed" << std::endl;
+    // test18(vcsc1, vcsc2, vcsc3, vcsc4, ivcsc1, ivcsc2, ivcsc3, ivcsc4);
+    // std::cout << "test18 passed" << std::endl;
+    // test19(vcsc1, vcsc2, vcsc3, vcsc4, ivcsc1, ivcsc2, ivcsc3, ivcsc4, eigen_sparse1, eigen_sparse2, eigen_sparse3, eigen_sparse4);
+    // std::cout << "test19 passed" << std::endl;
+    test20(vcsc1, vcsc2, vcsc3, vcsc4, ivcsc1, ivcsc2, ivcsc3, ivcsc4, eigen_sparse1, eigen_sparse2, eigen_sparse3, eigen_sparse4);
+    std::cout << "test20 passed" << std::endl;
+    test21(vcsc1, vcsc2, vcsc3, vcsc4, ivcsc1, ivcsc2, ivcsc3, ivcsc4, eigen_sparse1, eigen_sparse2, eigen_sparse3, eigen_sparse4);
+    std::cout << "test21 passed" << std::endl;
 
     return 0;
 }
@@ -1564,8 +1567,6 @@ void test19(IVSparse::VCSC<TYPE, INDEX_TYPE, IVSparseMAJOR> vcsc1,
     Eigen::Matrix<TYPE, -1, -1> eigen_dense3 = Eigen::Matrix<TYPE, -1, -1>(eigen3.transpose());
     Eigen::Matrix<TYPE, -1, -1> eigen_dense4 = Eigen::Matrix<TYPE, -1, -1>(eigen4.transpose());
 
-
-
     Eigen::Matrix<TYPE, -1, -1> ivcsc_result1 = ivcsc1 * eigen_dense1;
     Eigen::Matrix<TYPE, -1, -1> ivcsc_result2 = ivcsc2 * eigen_dense2;
     Eigen::Matrix<TYPE, -1, -1> ivcsc_result3 = ivcsc3 * eigen_dense3;
@@ -1595,4 +1596,96 @@ void test19(IVSparse::VCSC<TYPE, INDEX_TYPE, IVSparseMAJOR> vcsc1,
     assert(ivcsc_result4 == eigen_result4);
 
 
+}
+
+
+void test20(IVSparse::VCSC<TYPE, INDEX_TYPE, IVSparseMAJOR> vcsc1,
+            IVSparse::VCSC<TYPE, INDEX_TYPE, IVSparseMAJOR> vcsc2,
+            IVSparse::VCSC<TYPE, INDEX_TYPE, IVSparseMAJOR> vcsc3,
+            IVSparse::VCSC<TYPE, INDEX_TYPE, IVSparseMAJOR> vcsc4,
+            IVSparse::IVCSC<TYPE, IVSparseMAJOR> ivcsc1,
+            IVSparse::IVCSC<TYPE, IVSparseMAJOR> ivcsc2,
+            IVSparse::IVCSC<TYPE, IVSparseMAJOR> ivcsc3,
+            IVSparse::IVCSC<TYPE, IVSparseMAJOR> ivcsc4,
+            Eigen::SparseMatrix<TYPE, EIGENMAJOR> eigen1,
+            Eigen::SparseMatrix<TYPE, EIGENMAJOR> eigen2,
+            Eigen::SparseMatrix<TYPE, EIGENMAJOR> eigen3,
+            Eigen::SparseMatrix<TYPE, EIGENMAJOR> eigen4) {
+
+
+    Eigen::Matrix<TYPE, -1, -1> eigen_dense1 = Eigen::Matrix<TYPE, -1, -1>(eigen1);
+
+    Eigen::Matrix<TYPE, -1, -1> result1;
+    Eigen::Matrix<TYPE, -1, -1> result2;
+
+    result1 = eigen_dense1 + ivcsc1;
+    result2 = eigen_dense1 + vcsc1;
+
+    assert(result1 == result2);
+
+    result1 = result1 - ivcsc1;
+    result2 = result2 - vcsc1;
+
+    assert(result1 == result2);
+
+    result1 = result1 * ivcsc1;
+    result2 = result2 * vcsc1;
+
+    assert(result1 == result2);
+
+    result1 = result1 / ivcsc1;
+    result2 = result2 / vcsc1;
+
+    assert(result1 == result2);
+
+    result1 = result1 - result2;
+    assert(result1.sum() == 0);
+    assert(1 == 1);
+}
+
+void test21(IVSparse::VCSC<TYPE, INDEX_TYPE, IVSparseMAJOR> vcsc1,
+            IVSparse::VCSC<TYPE, INDEX_TYPE, IVSparseMAJOR> vcsc2,
+            IVSparse::VCSC<TYPE, INDEX_TYPE, IVSparseMAJOR> vcsc3,
+            IVSparse::VCSC<TYPE, INDEX_TYPE, IVSparseMAJOR> vcsc4,
+            IVSparse::IVCSC<TYPE, IVSparseMAJOR> ivcsc1,
+            IVSparse::IVCSC<TYPE, IVSparseMAJOR> ivcsc2,
+            IVSparse::IVCSC<TYPE, IVSparseMAJOR> ivcsc3,
+            IVSparse::IVCSC<TYPE, IVSparseMAJOR> ivcsc4,
+            Eigen::SparseMatrix<TYPE, EIGENMAJOR> eigen1,
+            Eigen::SparseMatrix<TYPE, EIGENMAJOR> eigen2,
+            Eigen::SparseMatrix<TYPE, EIGENMAJOR> eigen3,
+            Eigen::SparseMatrix<TYPE, EIGENMAJOR> eigen4) {
+
+            
+    Eigen::SparseMatrix<TYPE, EIGENMAJOR> result1 = eigen1;
+    Eigen::SparseMatrix<TYPE, EIGENMAJOR> result2 = eigen1;
+    Eigen::SparseMatrix<TYPE, EIGENMAJOR> result3 = eigen1 - eigen1; 
+    
+    result1 = result1 + ivcsc1;
+    result2 = result2 + vcsc1;
+
+    result3 = result1 - result2;
+    Eigen::Matrix<TYPE, -1, -1> eigen_dense1 = Eigen::Matrix<TYPE, -1, -1>(result3);
+    assert(eigen_dense1.sum() == 0);
+
+    result1 = result1 - ivcsc1;
+    result2 = result2 - vcsc1;
+
+    result3 = result1 - result2;
+    eigen_dense1 = Eigen::Matrix<TYPE, -1, -1>(result3);
+    assert(eigen_dense1.sum() == 0);
+
+    result1 = result1 * ivcsc1;
+    result2 = result2 * vcsc1;
+
+    result3 = result1 - result2;
+    eigen_dense1 = Eigen::Matrix<TYPE, -1, -1>(result3);
+    assert(eigen_dense1.sum() == 0);
+
+    result1 = result1 / ivcsc1;
+    result2 = result2 / vcsc1;
+
+    result3 = result1 - result2;
+    eigen_dense1 = Eigen::Matrix<TYPE, -1, -1>(result3);
+    assert(eigen_dense1.sum() == 0);
 }

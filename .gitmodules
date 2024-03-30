@@ -4,3 +4,6 @@
 [submodule "pybindBuild/cppwg"]
 	path = pybindBuild/cppwg
 	url = https://github.com/jmsgrogan/cppwg.git
+[submodule "eigen"]
+	path = eigen
+	url = https://gitlab.com/libeigen/eigen.git
