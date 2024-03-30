@@ -235,4 +235,7 @@ namespace IVSparse {
         return eigenTemp;
     }
 
+
+    
+
 } // namespace IVSparse

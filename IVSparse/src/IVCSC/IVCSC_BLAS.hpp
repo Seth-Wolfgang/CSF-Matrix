@@ -151,11 +151,11 @@ namespace IVSparse {
         } // end switch
 
         // If the maxCoeff is still the initialized value, set it to 0
-        for (int i = 0; i < maxCoeff.rows(); i++) 
-            if (maxCoeff(i, 0) == std::numeric_limits<T>::min()) 
+        for (int i = 0; i < maxCoeff.rows(); i++)
+            if (maxCoeff(i, 0) == std::numeric_limits<T>::min())
                 maxCoeff(i, 0) = 0;
-            
-        
+
+
         if (!axis) {
             return maxCoeff.transpose();
         }
@@ -357,19 +357,35 @@ namespace IVSparse {
     }
 
     // template <typename T, bool columnMajor>
-    // inline double IVCSC<T, columnMajor>::vectorLength(uint32_t col) {
+    // Eigen::Matrix<T, -1, -1> addTo(Eigen::Matrix<T, -1, -1>& eigen) {
+    //     Eigen::Matrix<T, -1, -1> newMatrix = Eigen::Matrix<T, -1, -1>::Zero(eigen.rows(), eigen.cols());
 
-    //     #ifdef IVSPARSE_DEBUG
-    //     assert(col < outerDim && col >= 0 && "The column index is out of bounds!");
+    //     #ifdef IVSPARSE_HAS_OPENMP
+    //     #pragma omp parallel for
     //     #endif
-
-    //     double norm = 0;
-
-    //     for (typename IVCSC<T, columnMajor>::InnerIterator it(*this, col);
-    //          it; ++it) {
-    //         norm += it.value() * it.value();
+    //     for (int i = 0; i < outerDim; i++) {
+    //         for (typename IVCSC<T, columnMajor>::InnerIterator it(*this, i); it; ++it) {
+    //             newMatrix(it.row(), it.col()) = it.value() + eigen(it.row(), it.col());
+    //         }
     //     }
-    //     return sqrt(norm);
+
+    //     return newMatrix;
     // }
+
+    // template <typename T, bool columnMajor>
+    // void addTo(Eigen::Matrix<T, -1, -1>& eigen) {
+
+    //     #ifdef IVSPARSE_HAS_OPENMP
+    //     #pragma omp parallel for
+    //     #endif
+    //     for (int i = 0; i < outerDim; i++) {
+    //         for (typename IVCSC<T, columnMajor>::InnerIterator it(*this, i); it; ++it) {
+    //             eigen(it.row(), it.col()) = it.value();
+    //         }
+    //     }
+
+    // }
+
+
 
 }  // namespace IVSparse

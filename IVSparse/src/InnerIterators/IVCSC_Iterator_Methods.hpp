@@ -48,6 +48,7 @@ namespace IVSparse {
         index = newIndex;
     }
 
+
     //* Getters *//
 
     // If the iterator is at a new run

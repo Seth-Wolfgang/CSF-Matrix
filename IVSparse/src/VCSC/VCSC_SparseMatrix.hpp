@@ -339,6 +339,49 @@ namespace IVSparse {
          */
         inline double norm();
 
+        // /**
+        //  * @returns a matrix containging the elementwise sum of the two matrices.
+        // */
+        // Eigen::Matrix<T, -1, -1> addTo(Eigen::Matrix<T, -1, -1>& eigen);
+
+        // /**
+        //  * @returns adds the elementwise sum of the two matrices to the input matrix.
+        // */
+        // void addTo(Eigen::Matrix<T, -1, -1>& eigen);
+
+        // /**
+        //  * @returns a matrix containging the elementwise difference of the two matrices.
+        // */
+        // Eigen::Matrix<T, -1, -1> subtractFrom(Eigen::Matrix<T, -1, -1>& eigen);
+
+        // /**
+        //  * @returns subtracts the elementwise difference of the two matrices from the input matrix.
+        // */
+        // void subtractFrom(Eigen::Matrix<T, -1, -1>& eigen);
+
+        // /**
+        //  * @returns a matrix containging the elementwise product of the two matrices.
+        // */
+        // Eigen::Matrix<T, -1, -1> multiplyBy(Eigen::Matrix<T, -1, -1>& eigen);
+
+        // /**
+        //  * @returns multiplies the elementwise product of the two matrices to the input matrix.
+        // */
+
+        // void multiplyBy(Eigen::Matrix<T, -1, -1>& eigen);
+
+        // /**
+        //  * @returns a matrix containging the elementwise division of the two matrices.
+        // */
+
+        // Eigen::Matrix<T, -1, -1> divideBy(Eigen::Matrix<T, -1, -1>& eigen);
+
+        // /**
+        //  * @returns divides the elementwise division of the two matrices to the input matrix.
+        // */
+
+        // void divideBy(Eigen::Matrix<T, -1, -1>& eigen);
+
         /**
          * @returns Returns the length of the specified vector.
          */

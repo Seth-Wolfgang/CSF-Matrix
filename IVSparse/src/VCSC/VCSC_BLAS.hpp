@@ -174,11 +174,11 @@ namespace IVSparse {
         } // end switch
 
         // If the maxCoeff is still the initialized value, set it to 0
-        for (int i = 0; i < maxCoeff.rows(); i++) 
-            if (maxCoeff(i, 0) == std::numeric_limits<T>::min()) 
+        for (int i = 0; i < maxCoeff.rows(); i++)
+            if (maxCoeff(i, 0) == std::numeric_limits<T>::min())
                 maxCoeff(i, 0) = 0;
-            
-        
+
+
         if (!axis) {
             return maxCoeff.transpose();
         }
@@ -399,24 +399,123 @@ namespace IVSparse {
     }
 
 
-
-    // Finds the length of a certain column
-    // template <typename T, typename indexT, bool columnMajor>
-    // inline double VCSC<T, indexT, columnMajor>::vectorLength(uint32_t col) {
-
-    //     #ifdef IVSPARSE_DEBUG
-    //     assert(col < outerDim && col >= 0 && "Column index out of bounds!");
-    //     #endif
-
-    //     double norm = 0;
+    // template <typename T, bool columnMajor>
+    // Eigen::Matrix<T, -1, -1> VCSC<T, indexT, columnMajor>::addTo(Eigen::Matrix<T, -1, -1>& eigen) {
+    //     Eigen::Matrix<T, -1, -1> newMatrix = Eigen::Matrix<T, -1, -1>::Zero(eigen.rows(), eigen.cols());
 
     //     #ifdef IVSPARSE_HAS_OPENMP
-    //     #pragma omp parallel for reduction(+ : norm)
+    //     #pragma omp parallel for
     //     #endif
-    //     for (int i = 0; i < valueSizes[col]; i++) {
-    //         norm += values[col][i] * values[col][i] * counts[col][i];
+    //     for (int i = 0; i < outerDim; i++) {
+    //         for (typename VCSC<T, indexT, columnMajor>::InnerIterator it(*this, i); it; ++it) {
+    //             newMatrix(it.row(), it.col()) = it.value() + eigen(it.row(), it.col());
+    //         }
     //     }
-    //     return sqrt(norm);
+
+    //     return newMatrix;
     // }
+
+    // template <typename T, bool columnMajor>
+    // void VCSC<T, indexT, columnMajor>::addTo(Eigen::Matrix<T, -1, -1>& eigen) {
+
+    //     #ifdef IVSPARSE_HAS_OPENMP
+    //     #pragma omp parallel for
+    //     #endif
+    //     for (int i = 0; i < outerDim; i++) {
+    //         for (typename VCSC<T, indexT, columnMajor>::InnerIterator it(*this, i); it; ++it) {
+    //             eigen(it.row(), it.col()) = it.value();
+    //         }
+    //     }
+    // }
+
+    // template <typename T, bool columnMajor>
+    // Eigen::Matrix<T, -1, -1> VCSC<T, indexT, columnMajor>::subFrom(Eigen::Matrix<T, -1, -1>& eigen) {
+    //     Eigen::Matrix<T, -1, -1> newMatrix = Eigen::Matrix<T, -1, -1>::Zero(eigen.rows(), eigen.cols());
+
+    //     #ifdef IVSPARSE_HAS_OPENMP
+    //     #pragma omp parallel for
+    //     #endif
+    //     for (int i = 0; i < outerDim; i++) {
+    //         for (typename VCSC<T, indexT, columnMajor>::InnerIterator it(*this, i); it; ++it) {
+    //             newMatrix(it.row(), it.col()) = it.value() - eigen(it.row(), it.col());
+    //         }
+    //     }
+
+    //     return newMatrix;
+    // }
+
+    // template <typename T, bool columnMajor>
+    // void VCSC<T, indexT, columnMajor>::subFrom(Eigen::Matrix<T, -1, -1>& eigen) {
+
+    //     #ifdef IVSPARSE_HAS_OPENMP
+    //     #pragma omp parallel for
+    //     #endif
+    //     for (int i = 0; i < outerDim; i++) {
+    //         for (typename VCSC<T, indexT, columnMajor>::InnerIterator it(*this, i); it; ++it) {
+    //             eigen(it.row(), it.col()) = it.value();
+    //         }
+    //     }
+    // }
+
+    // template <typename T, bool columnMajor>
+    // Eigen::Matrix<T, -1, -1> VCSC<T, indexT, columnMajor>::multiplyBy(Eigen::Matrix<T, -1, -1>& eigen) {
+    //     Eigen::Matrix<T, -1, -1> newMatrix = Eigen::Matrix<T, -1, -1>::Zero(eigen.rows(), eigen.cols());
+
+    //     #ifdef IVSPARSE_HAS_OPENMP
+    //     #pragma omp parallel for
+    //     #endif
+    //     for (int i = 0; i < outerDim; i++) {
+    //         for (typename VCSC<T, indexT, columnMajor>::InnerIterator it(*this, i); it; ++it) {
+    //             newMatrix(it.row(), it.col()) = it.value() * eigen(it.row(), it.col());
+    //         }
+    //     }
+
+    //     return newMatrix;
+    // }
+
+    // template <typename T, bool columnMajor>
+    // void VCSC<T, indexT, columnMajor>::multiplyBy(Eigen::Matrix<T, -1, -1>& eigen) {
+
+    //     #ifdef IVSPARSE_HAS_OPENMP
+    //     #pragma omp parallel for
+    //     #endif
+    //     for (int i = 0; i < outerDim; i++) {
+    //         for (typename VCSC<T, indexT, columnMajor>::InnerIterator it(*this, i); it; ++it) {
+    //             eigen(it.row(), it.col()) = it.value();
+    //         }
+    //     }
+    // }
+
+    // template <typename T, bool columnMajor>
+    // Eigen::Matrix<T, -1, -1> VCSC<T, indexT, columnMajor>::divideBy(Eigen::Matrix<T, -1, -1>& eigen) {
+    //     Eigen::Matrix<T, -1, -1> newMatrix = Eigen::Matrix<T, -1, -1>::Zero(eigen.rows(), eigen.cols());
+
+    //     #ifdef IVSPARSE_HAS_OPENMP
+    //     #pragma omp parallel for
+    //     #endif
+    //     for (int i = 0; i < outerDim; i++) {
+    //         for (typename VCSC<T, indexT, columnMajor>::InnerIterator it(*this, i); it; ++it) {
+    //             newMatrix(it.row(), it.col()) = it.value() / eigen(it.row(), it.col());
+    //         }
+    //     }
+
+    //     return newMatrix;
+    // }
+
+    // template <typename T, bool columnMajor>
+    // void VCSC<T, indexT, columnMajor>::divideBy(Eigen::Matrix<T, -1, -1>& eigen) {
+
+    //     #ifdef IVSPARSE_HAS_OPENMP
+    //     #pragma omp parallel for
+    //     #endif
+    //     for (int i = 0; i < outerDim; i++) {
+    //         for (typename VCSC<T, indexT, columnMajor>::InnerIterator it(*this, i); it; ++it) {
+    //             eigen(it.row(), it.col()) = it.value();
+    //         }
+    //     }
+    // }
+
+    
+
 
 }  // namespace IVSparse
