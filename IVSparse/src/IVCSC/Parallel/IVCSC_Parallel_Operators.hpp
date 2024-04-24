@@ -14,7 +14,7 @@ namespace IVSparse {
 
     //Matrix Multiplication
     template <typename T, bool columnMajor>
-    Eigen::Matrix<T, -1, -1> IVCSC<T, columnMajor>::operator*(Eigen::Matrix<T, -1, -1>& mat) {
+    Eigen::Matrix<T, -1, -1, !columnMajor> IVCSC<T, columnMajor>::operator*(Eigen::Matrix<T, -1, -1>& mat) {
 
         #ifdef IVSPARSE_DEBUG
         // check that the matrix is the correct size
@@ -46,7 +46,7 @@ namespace IVSparse {
 
 
     template <typename T, bool columnMajor>
-    Eigen::Matrix<T, -1, -1>  IVCSC<T, columnMajor>::operator* (const Eigen::Ref<const Eigen::Matrix<T, -1, -1>>& mat) {
+    Eigen::Matrix<T, -1, -1, !columnMajor>  IVCSC<T, columnMajor>::operator* (const Eigen::Ref<const Eigen::Matrix<T, -1, -1>>& mat) {
 
         #ifdef IVSPARSE_DEBUG
         // check that the matrix is the correct size

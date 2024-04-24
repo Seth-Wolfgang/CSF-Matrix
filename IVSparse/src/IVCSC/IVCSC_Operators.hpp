@@ -158,7 +158,7 @@ namespace IVSparse {
     // Matrix Matrix Multiplication (IVSparse Eigen -> Eigen)
     #ifndef IVSPARSE_HAS_OPENMP
     template <typename T, bool columnMajor>
-    Eigen::Matrix<T, -1, -1> IVCSC<T, columnMajor>::operator*(Eigen::Matrix<T, -1, -1>& mat) {
+    Eigen::Matrix<T, -1, -1, !columnMajor> IVCSC<T, columnMajor>::operator*(Eigen::Matrix<T, -1, -1>& mat) {
 
         #ifdef IVSPARSE_DEBUG
         // check that the matrix is the correct size
@@ -168,7 +168,7 @@ namespace IVSparse {
                 "matrix!");
         #endif
 
-        Eigen::Matrix<T, -1, -1> newMatrix = Eigen::Matrix<T, -1, -1>::Zero(mat.cols(), numRows);
+        Eigen::Matrix<T, -1, -1, !columnMajor> newMatrix = Eigen::Matrix<T, -1, -1>::Zero(mat.cols(), numRows);
         Eigen::Matrix<T, -1, -1> matTranspose = mat.transpose();
 
         for (uint32_t i = 0; i < outerDim; ++i) {
@@ -189,7 +189,7 @@ namespace IVSparse {
     
     #ifndef IVSPARSE_HAS_OPENMP
     template <typename T, bool columnMajor>
-    Eigen::Matrix<T, -1, -1>  IVCSC<T, columnMajor>::operator* (const Eigen::Ref<const Eigen::Matrix<T, -1, -1>>& mat) {
+    Eigen::Matrix<T, -1, -1, !columnMajor>  IVCSC<T, columnMajor>::operator* (const Eigen::Ref<const Eigen::Matrix<T, -1, -1>>& mat) {
 
         #ifdef IVSPARSE_DEBUG
         // check that the matrix is the correct size
@@ -199,7 +199,7 @@ namespace IVSparse {
                 "matrix!");
         #endif
 
-        Eigen::Matrix<T, -1, -1> newMatrix = Eigen::Matrix<T, -1, -1>::Zero(mat.cols(), numRows);
+        Eigen::Matrix<T, -1, -1, !columnMajor> newMatrix = Eigen::Matrix<T, -1, -1, !columnMajor>::Zero(mat.cols(), numRows);
         Eigen::Matrix<T, -1, -1> matTranspose = mat.transpose();
 
         // orientation of Sparse * Dense)
@@ -215,7 +215,7 @@ namespace IVSparse {
 
     // Matrix Vector Multiplication (IVSparse Eigen -> Eigen)
     template <typename T, bool columnMajor>
-    inline Eigen::Matrix<T, -1, 1> IVCSC<T, columnMajor>::operator*(const Eigen::Ref<const Eigen::Matrix<T, -1, 1>>& vec) {
+    inline Eigen::Matrix<T, -1, 1, !columnMajor> IVCSC<T, columnMajor>::operator*(const Eigen::Ref<const Eigen::Matrix<T, -1, 1>>& vec) {
 
         #ifdef IVSPARSE_DEBUG
         // check that the vector is the correct size
@@ -224,7 +224,7 @@ namespace IVSparse {
                "matrix!");
         #endif
 
-        Eigen::Matrix<T, -1, 1> eigenTemp = Eigen::Matrix<T, -1, 1>::Zero(innerDim, 1);
+        Eigen::Matrix<T, -1, 1, !columnMajor> eigenTemp = Eigen::Matrix<T, -1, 1, !columnMajor>::Zero(innerDim, 1);
 
         // iterate over the vector and multiply the corresponding row of the matrix by the vecIter value
         for (uint32_t i = 0; i < outerDim; i++) {

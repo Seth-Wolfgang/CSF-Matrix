@@ -20,7 +20,7 @@ namespace IVSparse {
 
         if (data != nullptr) {
             // free the data
-            for (size_t i = 0; i < outerDim; i++) {
+            for (uint32_t i = 0; i < outerDim; i++) {
                 if (data[i] != nullptr) {
                     free(data[i]);
                 }
@@ -68,7 +68,7 @@ namespace IVSparse {
         }
 
         // set all data and endpointers to the nullptr
-        for (size_t i = 0; i < outerDim; i++) {
+        for (uint32_t i = 0; i < outerDim; i++) {
             data[i] = nullptr;
             endPointers[i] = nullptr;
         }
@@ -267,7 +267,7 @@ namespace IVSparse {
         }
 
         // set all data and endpointers to the nullptr
-        for (size_t i = 0; i < outerDim; i++) {
+        for (uint32_t i = 0; i < outerDim; i++) {
             data[i] = nullptr;
             endPointers[i] = nullptr;
         }
@@ -471,7 +471,7 @@ namespace IVSparse {
         }
 
         // get the vector sizes and allocate memory
-        for (size_t i = 0; i < outerDim; i++) {
+        for (uint32_t i = 0; i < outerDim; i++) {
             // get the size of the column
             uint64_t size;
 
@@ -495,7 +495,7 @@ namespace IVSparse {
         }
 
         // read the data
-        for (size_t i = 0; i < outerDim; i++) {
+        for (uint32_t i = 0; i < outerDim; i++) {
             fread(data[i], 1, (uint8_t*)endPointers[i] - (uint8_t*)data[i], fp);
         }
 
@@ -657,7 +657,7 @@ namespace IVSparse {
         // #ifdef IVSPARSE_HAS_OPENMP
         // #pragma omp parallel for
         // #endif
-        // for (size_t i = 0; i < outerDim; i++) {
+        // for (uint32_t i = 0; i < outerDim; i++) {
         //     data[i] = nullptr;
         //     endPointers[i] = nullptr;
         // }
@@ -668,7 +668,7 @@ namespace IVSparse {
         #ifdef IVSPARSE_HAS_OPENMP
         #pragma omp parallel for
         #endif
-        for (size_t i = 0; i < outerDim; i++) {
+        for (uint32_t i = 0; i < outerDim; i++) {
             // check if the column is empty
             if (maps[i].empty()) [[unlikely]] {
                 data[i] = nullptr;
@@ -710,7 +710,7 @@ namespace IVSparse {
                 helpPtr = (uint8_t*)helpPtr + 1;
 
                 // write the indices
-                for (size_t k = 0; k < val.second.size(); k++) {
+                for (uint32_t k = 0; k < val.second.size(); k++) {
                     if (k == val.second.size() - 1) break;
 
                     switch (val.second[val.second.size() - 1]) {

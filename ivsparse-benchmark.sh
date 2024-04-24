@@ -1,13 +1,13 @@
 #! /bin/bash
 
 # change directory
-cd ~/IVSparse-dev/Benchmarking/lib
+cd ~/vscode/PyVSparse/src/IVSparse/IVSparse-dev/Benchmarking/lib
 
 
 #for nrows in 1000000 500000000
-#for nrows in 10000, 25000, 50000, 100000, 250000, 500000, 1000000, 5000000, 10000000, 50000000, 100000000, 500000000, 1000000000, 10000000000
+# for nrows in 10000, 25000, 50000, 100000, 250000, 500000, 1000000, 5000000, 10000000, 50000000, 100000000, 500000000, 1000000000, 10000000000
 
-email=YOUREMAIL
+email="wolfgans@mail.gvsu.edu"
 
 for density in 10
 do
@@ -15,7 +15,7 @@ do
 	for nrows in 1000000 
 	do
 		which_method="all"
-		resultssuffix="float-O3-25cols-eigenopt"
+		resultssuffix="float-O3-10cols-eigenopt"
 		filename="customized/${resultssuffix}/ivsparse-job-submission-${nrows}-${density}.sh"
 		cpfname="customized/${resultssuffix}/simulatedBench_COO_${nrows}_${density}.cpp"
 		rm ${cpfname} ${filename}
@@ -34,7 +34,7 @@ do
 		echo "#SBATCH --mail-type=begin" >> ${filename}
 		echo "#SBATCH --mail-type=end" >> ${filename}
 		echo "#SBATCH --mail-type=fail" >> ${filename}
-		echo "#SBATCH --mail-user=${email} >> ${filename}
+		echo "#SBATCH --mail-user=${email}" >> ${filename}
 		echo "#SBATCH --mem=0" >> ${filename}
 		echo "#SBATCH --exclusive" >> ${filename}
 		

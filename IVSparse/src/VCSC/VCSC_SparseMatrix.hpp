@@ -536,8 +536,8 @@ namespace IVSparse {
         Eigen::Matrix<T, -1, 1> operator*(const Eigen::Ref<const Eigen::Matrix<T, -1, 1>>& mat);
 
         // Matrix Matrix Multiplication
-        Eigen::Matrix<T, -1, -1> operator*(Eigen::Matrix<T, -1, -1>& mat);
-        Eigen::Matrix<T, -1, -1> operator*(const Eigen::Ref<const Eigen::Matrix<T, -1, -1>>& mat);
+        Eigen::Matrix<T, -1, -1, !columnMajor> operator*(Eigen::Matrix<T, -1, -1>& mat);
+        Eigen::Matrix<T, -1, -1, !columnMajor> operator*(const Eigen::Ref<const Eigen::Matrix<T, -1, -1>>& mat);
 
 
     };  // End of VCSC Sparse Matrix Class

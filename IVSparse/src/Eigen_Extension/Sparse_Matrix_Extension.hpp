@@ -1,11 +1,13 @@
+// #include "../../../SparseMatrix"
+
 // If you have another plugin file, you can include it here
 #ifdef ADDITIONAL_EIGEN_SPARSEMATRIXBASE_PLUGIN
 #include ADDITIONAL_EIGEN_SPARSEMATRIXBASE_PLUGIN
 #endif
 
 template <typename T, bool columnMajor>
-SparseMatrix<T> operator+(IVSparse::IVCSC<T, columnMajor>& mat) {
-    SparseMatrix<T> result = *this;
+Derived operator+(IVSparse::IVCSC<T, columnMajor>& mat) {
+    Derived result = *this;
 
     #ifdef IVSPARSE_HAS_OPENMP
     #pragma omp parallel for
@@ -20,8 +22,8 @@ SparseMatrix<T> operator+(IVSparse::IVCSC<T, columnMajor>& mat) {
 }
 
 template <typename T, typename indexT, bool columnMajor>
-SparseMatrix<T> operator+(IVSparse::VCSC<T, indexT, columnMajor>& mat) {
-    SparseMatrix<T> result = *this;
+Derived operator+(IVSparse::VCSC<T, indexT, columnMajor>& mat) {
+    Derived result = *this;
 
     #ifdef IVSPARSE_HAS_OPENMP
     #pragma omp parallel for
@@ -36,8 +38,8 @@ SparseMatrix<T> operator+(IVSparse::VCSC<T, indexT, columnMajor>& mat) {
 }
 
 template <typename T, bool columnMajor>
-SparseMatrix<T> operator-(IVSparse::IVCSC<T, columnMajor>& mat) {
-    SparseMatrix<T> result = *this;
+Derived operator-(IVSparse::IVCSC<T, columnMajor>& mat) {
+    Derived result = *this;
 
     #ifdef IVSPARSE_HAS_OPENMP
     #pragma omp parallel for
@@ -52,8 +54,8 @@ SparseMatrix<T> operator-(IVSparse::IVCSC<T, columnMajor>& mat) {
 }
 
 template <typename T, typename indexT, bool columnMajor>
-SparseMatrix<T> operator-(IVSparse::VCSC<T, indexT, columnMajor>& mat) {
-    SparseMatrix<T> result = *this;
+Derived operator-(IVSparse::VCSC<T, indexT, columnMajor>& mat) {
+    Derived result = *this;
 
     #ifdef IVSPARSE_HAS_OPENMP
     #pragma omp parallel for
@@ -68,8 +70,8 @@ SparseMatrix<T> operator-(IVSparse::VCSC<T, indexT, columnMajor>& mat) {
 }
 
 template <typename T, typename indexT, bool columnMajor>
-SparseMatrix<T> operator*(IVSparse::VCSC<T, indexT, columnMajor>& mat) {
-    SparseMatrix<T> result = *this;
+Derived operator*(IVSparse::VCSC<T, indexT, columnMajor>& mat) {
+    Derived result = *this;
 
     #ifdef IVSPARSE_HAS_OPENMP
     #pragma omp parallel for
@@ -84,8 +86,8 @@ SparseMatrix<T> operator*(IVSparse::VCSC<T, indexT, columnMajor>& mat) {
 }
 
 template <typename T, bool columnMajor>
-SparseMatrix<T> operator*(IVSparse::IVCSC<T, columnMajor>& mat) {
-    SparseMatrix<T> result = *this;
+Derived operator*(IVSparse::IVCSC<T, columnMajor>& mat) {
+    Derived result = *this;
 
     #ifdef IVSPARSE_HAS_OPENMP
     #pragma omp parallel for
@@ -100,8 +102,8 @@ SparseMatrix<T> operator*(IVSparse::IVCSC<T, columnMajor>& mat) {
 }
 
 template <typename T, typename indexT, bool columnMajor>
-SparseMatrix<T> operator/(IVSparse::VCSC<T, indexT, columnMajor>& mat) {
-    SparseMatrix<T> result = *this;
+Derived operator/(IVSparse::VCSC<T, indexT, columnMajor>& mat) {
+    Derived result = *this;
 
     #ifdef IVSPARSE_HAS_OPENMP
     #pragma omp parallel for
@@ -116,8 +118,8 @@ SparseMatrix<T> operator/(IVSparse::VCSC<T, indexT, columnMajor>& mat) {
 }
 
 template <typename T, bool columnMajor>
-SparseMatrix<T> operator/(IVSparse::IVCSC<T, columnMajor>& mat) {
-    SparseMatrix<T> result = *this;
+Derived operator/(IVSparse::IVCSC<T, columnMajor>& mat) {
+    Derived result = *this;
 
     #ifdef IVSPARSE_HAS_OPENMP
     #pragma omp parallel for

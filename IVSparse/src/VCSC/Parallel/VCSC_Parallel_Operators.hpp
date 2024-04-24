@@ -12,7 +12,7 @@ namespace IVSparse {
 
 
     template <typename T, typename indexT, bool columnMajor>
-    Eigen::Matrix<T, -1, -1> VCSC<T, indexT, columnMajor>::operator* (Eigen::Matrix<T, -1, -1>& mat) {
+    Eigen::Matrix<T, -1, -1, !columnMajor> VCSC<T, indexT, columnMajor>::operator* (Eigen::Matrix<T, -1, -1>& mat) {
         #ifdef IVSPARSE_DEBUG
         // check that the matrix is the correct size
         if (mat.rows() != numCols)
@@ -43,7 +43,7 @@ namespace IVSparse {
     }
 
     template <typename T, typename indexT, bool columnMajor>
-    Eigen::Matrix<T, -1, -1>  VCSC<T, indexT, columnMajor>::operator* (const Eigen::Ref<const Eigen::Matrix<T, -1, -1>>& mat) {
+    Eigen::Matrix<T, -1, -1, !columnMajor>  VCSC<T, indexT, columnMajor>::operator* (const Eigen::Ref<const Eigen::Matrix<T, -1, -1>>& mat) {
         #ifdef IVSPARSE_DEBUG
         // check that the matrix is the correct size
         if (mat.rows() != numCols)

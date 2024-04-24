@@ -21,7 +21,7 @@ namespace IVSparse {
 
         // delete the values
         if (values != nullptr) {
-            for (size_t i = 0; i < outerDim; i++) {
+            for (uint32_t i = 0; i < outerDim; i++) {
                 if (values[i] != nullptr) {
                     free(values[i]);
                 }
@@ -29,7 +29,7 @@ namespace IVSparse {
             free(values);
         }
         if (counts != nullptr) {
-            for (size_t i = 0; i < outerDim; i++) {
+            for (uint32_t i = 0; i < outerDim; i++) {
                 if (counts[i] != nullptr) {
                     free(counts[i]);
                 }
@@ -37,7 +37,7 @@ namespace IVSparse {
             free(counts);
         }
         if (indices != nullptr) {
-            for (size_t i = 0; i < outerDim; i++) {
+            for (uint32_t i = 0; i < outerDim; i++) {
                 if (indices[i] != nullptr) {
                     free(indices[i]);
                 }
@@ -212,7 +212,7 @@ namespace IVSparse {
         std::map<T2, std::vector<indexT2>> maps[outerDim];
 
         // loop through the tuples
-        for (size_t i = 0; i < nnz; i++) {
+        for (uint32_t i = 0; i < nnz; i++) {
             // get the column
             indexT2 row = std::get<0>(entries[i]);
             indexT2 col = std::get<1>(entries[i]);
@@ -234,7 +234,7 @@ namespace IVSparse {
         #ifdef IVSPARSE_HAS_OPENMP
         #pragma omp parallel for
         #endif
-        for (size_t i = 0; i < outerDim; i++) {
+        for (uint32_t i = 0; i < outerDim; i++) {
             // check if the column is empty
             if (maps[i].empty()) {
                 values[i] = nullptr;
@@ -347,17 +347,17 @@ namespace IVSparse {
         }
 
         // read in the value sizes
-        for (size_t i = 0; i < outerDim; i++) {
+        for (uint32_t i = 0; i < outerDim; i++) {
             fread(&valueSizes[i], sizeof(indexT), 1, fp);
         }
 
         // read in the index sizes
-        for (size_t i = 0; i < outerDim; i++) {
+        for (uint32_t i = 0; i < outerDim; i++) {
             fread(&indexSizes[i], sizeof(indexT), 1, fp);
         }
 
         // read in the values
-        for (size_t i = 0; i < outerDim; i++) {
+        for (uint32_t i = 0; i < outerDim; i++) {
             try {
                 values[i] = (T*)malloc(sizeof(T) * valueSizes[i]);
             }
@@ -369,7 +369,7 @@ namespace IVSparse {
         }
 
         // read in the counts
-        for (size_t i = 0; i < outerDim; i++) {
+        for (uint32_t i = 0; i < outerDim; i++) {
             try {
                 counts[i] = (indexT*)malloc(sizeof(indexT) * valueSizes[i]);
             }
@@ -381,7 +381,7 @@ namespace IVSparse {
         }
 
         // read in the indices
-        for (size_t i = 0; i < outerDim; i++) {
+        for (uint32_t i = 0; i < outerDim; i++) {
             try {
                 indices[i] = (indexT*)malloc(sizeof(indexT) * indexSizes[i]);
             }
@@ -594,7 +594,7 @@ namespace IVSparse {
         #ifdef IVSPARSE_HAS_OPENMP
         #pragma omp parallel for
         #endif
-        for (size_t i = 0; i < outerDim; i++) {
+        for (uint32_t i = 0; i < outerDim; i++) {
             // check if the column is empty
             if (maps[i].empty()) [[unlikely]] {
                 values[i] = nullptr;
