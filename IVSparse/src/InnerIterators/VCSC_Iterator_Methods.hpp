@@ -111,25 +111,25 @@ namespace IVSparse {
     // Equality Operator
     template <typename T, typename indexT, bool columnMajor>
     bool VCSC<T, indexT, columnMajor>::InnerIterator::operator==(const InnerIterator& other) {
-        return values == other.values;
+        return val == other->val;
     }
 
     // Inequality Operator
     template <typename T, typename indexT, bool columnMajor>
     bool VCSC<T, indexT, columnMajor>::InnerIterator::operator!=(const InnerIterator& other) {
-        return values != other.values;
+        return *val != other->val;
     }
 
     // Less Than Operator
     template <typename T, typename indexT, bool columnMajor>
     bool VCSC<T, indexT, columnMajor>::InnerIterator::operator<(const InnerIterator& other) {
-        return values < other.values;
+        return *val < other->val;
     }
 
     // Greater Than Operator
     template <typename T, typename indexT, bool columnMajor>
     bool VCSC<T, indexT, columnMajor>::InnerIterator::operator>(const InnerIterator& other) {
-        return values > other.values;
+        return *val > other->val;
     }
 
     // Increment Operator

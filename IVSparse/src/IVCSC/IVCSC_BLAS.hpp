@@ -22,7 +22,7 @@ namespace IVSparse {
         #ifdef IVSPARSE_HAS_OPENMP
         #pragma omp parallel for
         #endif
-        for (uint32_t i = 0; i < this->outerDim; ++i) {
+        for (size_t i = 0; i < this->outerDim; ++i) {
             for (typename IVCSC<T, columnMajor>::InnerIterator it(newMatrix, i); it; ++it) {
                 if (it.isNewRun()) {
                     it.coeff(it.value() * scalar);
@@ -40,7 +40,7 @@ namespace IVSparse {
         #ifdef IVSPARSE_HAS_OPENMP
         #pragma omp parallel for
         #endif
-        for (uint32_t i = 0; i < outerDim; ++i) {
+        for (size_t i = 0; i < outerDim; ++i) {
             for (typename IVCSC<T, columnMajor>::InnerIterator it(*this, i); it; ++it) {
                 if (it.isNewRun()) {
                     it.coeff(it.value() * scalar);
@@ -66,7 +66,7 @@ namespace IVSparse {
 
         // iterate over the vector and multiply the corresponding row of the matrix by the vecIter value
 
-        for (uint32_t i = 0; i < outerDim; i++) {
+        for (size_t i = 0; i < outerDim; i++) {
             for (typename IVCSC<T, columnMajor>::InnerIterator matIter(*this, i); matIter; ++matIter) {
                 eigenTemp(matIter.row()) += vec(matIter.col()) * matIter.value();
             }

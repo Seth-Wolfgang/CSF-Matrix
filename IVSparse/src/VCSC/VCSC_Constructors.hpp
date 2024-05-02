@@ -21,7 +21,7 @@ namespace IVSparse {
 
         // delete the values
         if (values != nullptr) {
-            for (uint32_t i = 0; i < outerDim; i++) {
+            for (size_t i = 0; i < outerDim; i++) {
                 if (values[i] != nullptr) {
                     free(values[i]);
                 }
@@ -29,7 +29,7 @@ namespace IVSparse {
             free(values);
         }
         if (counts != nullptr) {
-            for (uint32_t i = 0; i < outerDim; i++) {
+            for (size_t i = 0; i < outerDim; i++) {
                 if (counts[i] != nullptr) {
                     free(counts[i]);
                 }
@@ -37,7 +37,7 @@ namespace IVSparse {
             free(counts);
         }
         if (indices != nullptr) {
-            for (uint32_t i = 0; i < outerDim; i++) {
+            for (size_t i = 0; i < outerDim; i++) {
                 if (indices[i] != nullptr) {
                     free(indices[i]);
                 }
@@ -209,10 +209,11 @@ namespace IVSparse {
             }
         });
 
-        std::map<T2, std::vector<indexT2>> maps[outerDim];
+        // std::map<T2, std::vector<indexT2>> maps[outerDim];
+        std::map<T2, std::vector<indexT2>>* maps = (std::map<T2, std::vector<indexT2>>*)malloc(sizeof(std::map<T2, std::vector<indexT2>>) * outerDim);
 
         // loop through the tuples
-        for (uint32_t i = 0; i < nnz; i++) {
+        for (size_t i = 0; i < nnz; i++) {
             // get the column
             indexT2 row = std::get<0>(entries[i]);
             indexT2 col = std::get<1>(entries[i]);
@@ -234,7 +235,7 @@ namespace IVSparse {
         #ifdef IVSPARSE_HAS_OPENMP
         #pragma omp parallel for
         #endif
-        for (uint32_t i = 0; i < outerDim; i++) {
+        for (size_t i = 0; i < outerDim; i++) {
             // check if the column is empty
             if (maps[i].empty()) {
                 values[i] = nullptr;
@@ -283,7 +284,8 @@ namespace IVSparse {
             }
 
         }  // end of loop through the array
-
+        free(maps);
+        
         // run the user checks and calculate the compression size
         calculateCompSize();
 
@@ -297,7 +299,7 @@ namespace IVSparse {
     template <typename T, typename indexT, bool columnMajor>
     VCSC<T, indexT, columnMajor>::VCSC(char* filename) {
 
-        assert(strcasestr(filename, ".vcsc") != NULL && "Error: File must be a .vcsc file");
+        assert(strstr(filename, ".vcsc") != NULL && "Error: File must be a .vcsc file");
 
         // open the file
         FILE* fp = fopen(filename, "rb");
@@ -347,17 +349,17 @@ namespace IVSparse {
         }
 
         // read in the value sizes
-        for (uint32_t i = 0; i < outerDim; i++) {
+        for (size_t i = 0; i < outerDim; i++) {
             fread(&valueSizes[i], sizeof(indexT), 1, fp);
         }
 
         // read in the index sizes
-        for (uint32_t i = 0; i < outerDim; i++) {
+        for (size_t i = 0; i < outerDim; i++) {
             fread(&indexSizes[i], sizeof(indexT), 1, fp);
         }
 
         // read in the values
-        for (uint32_t i = 0; i < outerDim; i++) {
+        for (size_t i = 0; i < outerDim; i++) {
             try {
                 values[i] = (T*)malloc(sizeof(T) * valueSizes[i]);
             }
@@ -369,7 +371,7 @@ namespace IVSparse {
         }
 
         // read in the counts
-        for (uint32_t i = 0; i < outerDim; i++) {
+        for (size_t i = 0; i < outerDim; i++) {
             try {
                 counts[i] = (indexT*)malloc(sizeof(indexT) * valueSizes[i]);
             }
@@ -381,7 +383,7 @@ namespace IVSparse {
         }
 
         // read in the indices
-        for (uint32_t i = 0; i < outerDim; i++) {
+        for (size_t i = 0; i < outerDim; i++) {
             try {
                 indices[i] = (indexT*)malloc(sizeof(indexT) * indexSizes[i]);
             }
@@ -497,7 +499,7 @@ namespace IVSparse {
     //     offset += sizeof(indexT) * outerDim * 2;
 
     //     #pragma omp parallel for
-    //     for (uint32_t i = 0; i < outerDim; i++) {
+    //     for (size_t i = 0; i < outerDim; i++) {
     //         try {
     //             values[i] = (T*)malloc(sizeof(T) * valueSizes[i]);
     //             counts[i] = (indexT*)malloc(sizeof(indexT) * valueSizes[i]);
@@ -513,7 +515,7 @@ namespace IVSparse {
     //     uint64_t indicesStart = 0;
 
     //     #pragma omp parallel for reduction(+:countsStart, indicesStart)
-    //     for (uint32_t i = 0; i < outerDim; i++) {
+    //     for (size_t i = 0; i < outerDim; i++) {
     //         countsStart += valueSizes[i] * sizeof(T);
     //         indicesStart += indexSizes[i] * sizeof(indexT);
     //     }
@@ -521,7 +523,7 @@ namespace IVSparse {
 
 
     //     #pragma omp parallel for 
-    //     for (uint32_t i = 0; i < outerDim; ++i) {
+    //     for (size_t i = 0; i < outerDim; ++i) {
 
     //         uint64_t tempOffset = offset;
     //         uint64_t tempCountsStart = countsStart;
@@ -554,6 +556,20 @@ namespace IVSparse {
     // }  // end of File Constructor
     // #endif
 
+    template <typename T, typename indexT, bool columnMajor>
+    VCSC<T, indexT, columnMajor>::VCSC(const char* filename) {
+
+        *this = VCSC<T, indexT, columnMajor>((char*) filename);
+
+    }
+
+
+    template <typename T, typename indexT, bool columnMajor>
+    VCSC<T, indexT, columnMajor>::VCSC(std::string filename) {
+
+        *this = VCSC<T, indexT, columnMajor>(filename.c_str());
+
+    }
 
 
     //* Private Constructors *//
@@ -594,7 +610,7 @@ namespace IVSparse {
         #ifdef IVSPARSE_HAS_OPENMP
         #pragma omp parallel for
         #endif
-        for (uint32_t i = 0; i < outerDim; i++) {
+        for (size_t i = 0; i < outerDim; i++) {
             // check if the column is empty
             if (maps[i].empty()) [[unlikely]] {
                 values[i] = nullptr;

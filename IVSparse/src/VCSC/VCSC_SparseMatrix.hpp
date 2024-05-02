@@ -196,6 +196,8 @@ namespace IVSparse {
          * read in the matrix and construct it.
          */
         VCSC(char* filename);
+        VCSC(const char* filename);
+        VCSC(std::string filename);
 
         /**
          * @brief Destroy the Sparse Matrix object
@@ -406,6 +408,9 @@ namespace IVSparse {
            */
         void write(char* filename);
 
+        void write(const char* filename);
+
+        void write(std::string filename);
 
         /**
         * @param filename The filename of the matrix to read from
@@ -415,8 +420,11 @@ namespace IVSparse {
         *
        */
 
-
         void read(char* filename);
+
+        void read(const char* filename);
+
+        void read(std::string filename);
 
         /**
          * Prints "IVSparse Matrix:" followed by the dense representation of the

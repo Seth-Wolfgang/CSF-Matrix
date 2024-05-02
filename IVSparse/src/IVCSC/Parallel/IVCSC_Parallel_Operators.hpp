@@ -29,7 +29,7 @@ namespace IVSparse {
         std::vector<std::mutex> mutexList(innerDim);
 
         #pragma omp parallel for
-        for (uint32_t i = 0; i < outerDim; ++i) {
+        for (size_t i = 0; i < outerDim; ++i) {
             for (typename IVCSC<T, columnMajor>::InnerIterator matIter(*this, i); matIter; ++matIter) {
                 std::lock_guard<std::mutex> lock(mutexList[matIter.getIndex()]);
                 if constexpr (columnMajor) {
@@ -61,7 +61,7 @@ namespace IVSparse {
         std::vector<std::mutex> mutexList(innerDim);
 
         #pragma omp parallel for
-        for (uint32_t i = 0; i < outerDim; ++i) {
+        for (size_t i = 0; i < outerDim; ++i) {
             for (typename IVCSC<T, columnMajor>::InnerIterator matIter(*this, i); matIter; ++matIter) {
                 std::lock_guard<std::mutex> lock(mutexList[matIter.getIndex()]);
                 if constexpr (columnMajor) {

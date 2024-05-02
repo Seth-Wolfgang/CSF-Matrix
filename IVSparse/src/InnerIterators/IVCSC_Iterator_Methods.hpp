@@ -107,7 +107,7 @@ namespace IVSparse {
 
     // Index decoder
     template<typename T, bool columnMajor>
-    inline void __attribute__((hot)) IVCSC<T, columnMajor>::InnerIterator::decodeIndex() {
+    inline void IVCSC<T, columnMajor>::InnerIterator::decodeIndex() {
         switch (indexWidth) {
         case 1:
             newIndex = static_cast<size_t>(*static_cast<uint8_t*>(data));

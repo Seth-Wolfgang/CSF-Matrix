@@ -42,7 +42,7 @@ namespace IVSparse {
         //* Private Class Methods *//
 
         // Decodes the index from the data pointer
-        void __attribute__((hot)) decodeIndex();
+        void decodeIndex();
 
         public:
         //* Constructors & Destructor *//
@@ -114,7 +114,7 @@ namespace IVSparse {
         //* Operator Overloads *//
 
         // Increment Operator
-        void __attribute__((hot)) operator++();
+        void operator++();
 
         // Equality Operators
         bool operator==(const InnerIterator& other);
@@ -129,7 +129,7 @@ namespace IVSparse {
         bool operator>(const InnerIterator& other);
 
         // Bool Operator
-        inline __attribute__((hot)) operator bool() {
+        inline operator bool() {
             return (static_cast<char*>(endPtr) - indexWidth > data);
         }
 

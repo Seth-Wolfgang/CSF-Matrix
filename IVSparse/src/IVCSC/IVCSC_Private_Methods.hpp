@@ -47,8 +47,8 @@ namespace IVSparse {
         os << "IVCSC Matrix" << std::endl;
 
         // if the matrix is less than 100 rows and columns print the whole thing
-        for (uint32_t i = 0; i < 100 && i < numRows; i++) {
-            for (uint32_t j = 0; j < 100 && j < numCols; j++) {
+        for (size_t i = 0; i < 100 && i < numRows; i++) {
+            for (size_t j = 0; j < 100 && j < numCols; j++) {
                 os << static_cast<int>(coeff(i, j)) << " ";
             }
             os << std::endl;
@@ -63,8 +63,8 @@ namespace IVSparse {
         os << "IVCSC Matrix" << std::endl;
 
         // if the matrix is less than 100 rows and columns print the whole thing
-        for (uint32_t i = 0; i < 100 && i < numRows; i++) {
-            for (uint32_t j = 0; j < 100 && j < numCols; j++) {
+        for (size_t i = 0; i < 100 && i < numRows; i++) {
+            for (size_t j = 0; j < 100 && j < numCols; j++) {
                 os << static_cast<int>(coeff(i, j)) << " ";
             }
             os << std::endl;
@@ -130,7 +130,7 @@ namespace IVSparse {
         // compSize += (sizeof(void*) * outerDim) * 2;
 
         // add the size of the data itself
-        for (uint32_t i = 0; i < outerDim; i++) {
+        for (size_t i = 0; i < outerDim; i++) {
             compSize += *((uint8_t**)endPointers + i) - *((uint8_t**)data + i);
         }
     }
@@ -180,7 +180,7 @@ namespace IVSparse {
         #ifdef IVSPARSE_HAS_OPENMP
         #pragma omp parallel for
         #endif
-        for (uint32_t i = 0; i < outerDim; i++) {
+        for (size_t i = 0; i < outerDim; i++) {
             // create the data structure to temporarily hold the data
             std::map<T2, std::vector<indexT2>> dict;  // Key = value, Value = vector of indices
 

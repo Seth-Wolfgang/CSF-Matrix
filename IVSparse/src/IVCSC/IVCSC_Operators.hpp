@@ -17,7 +17,7 @@ namespace IVSparse {
         if (this != &other) {
             // free old data
             if (data != nullptr) {
-                for (uint32_t i = 0; i < outerDim; i++) {
+                for (size_t i = 0; i < outerDim; i++) {
                     if (data[i] != nullptr) {
                         free(data[i]);
                     }
@@ -59,7 +59,7 @@ namespace IVSparse {
             index_t = other.index_t;
 
             // copy the data
-            for (uint32_t i = 0; i < outerDim; i++) {
+            for (size_t i = 0; i < outerDim; i++) {
                 // if the vector is empty, set the data pointer to nullptr
                 if (other.data[i] == nullptr) {
                     data[i] = nullptr;
@@ -92,7 +92,7 @@ namespace IVSparse {
             return false;
 
         // iterate through the data and compare each element
-        for (uint32_t i = 0; i < outerDim; i++) {
+        for (size_t i = 0; i < outerDim; i++) {
             if (memcmp(data[i], other.data[i], getVectorByteSize(i)) != 0) return false;
         }
 
@@ -171,7 +171,7 @@ namespace IVSparse {
         Eigen::Matrix<T, -1, -1, !columnMajor> newMatrix = Eigen::Matrix<T, -1, -1>::Zero(mat.cols(), numRows);
         Eigen::Matrix<T, -1, -1> matTranspose = mat.transpose();
 
-        for (uint32_t i = 0; i < outerDim; ++i) {
+        for (size_t i = 0; i < outerDim; ++i) {
             for (typename IVCSC<T, columnMajor>::InnerIterator matIter(*this, i); matIter; ++matIter) {
 
                 if constexpr (columnMajor) {
@@ -203,7 +203,7 @@ namespace IVSparse {
         Eigen::Matrix<T, -1, -1> matTranspose = mat.transpose();
 
         // orientation of Sparse * Dense)
-        for (uint32_t col = 0; col < numCols; col++) {
+        for (size_t col = 0; col < numCols; col++) {
             for (typename IVCSC<T, columnMajor>::InnerIterator matIter(*this, col); matIter; ++matIter) {
                 newMatrix.col(matIter.row()) += matTranspose.col(col) * matIter.value();
             }
@@ -227,7 +227,7 @@ namespace IVSparse {
         Eigen::Matrix<T, -1, 1, !columnMajor> eigenTemp = Eigen::Matrix<T, -1, 1, !columnMajor>::Zero(innerDim, 1);
 
         // iterate over the vector and multiply the corresponding row of the matrix by the vecIter value
-        for (uint32_t i = 0; i < outerDim; i++) {
+        for (size_t i = 0; i < outerDim; i++) {
             for (typename IVCSC<T, columnMajor>::InnerIterator matIter(*this, i); matIter; ++matIter) {
                 eigenTemp(matIter.row()) += vec(matIter.col()) * matIter.value();
             }

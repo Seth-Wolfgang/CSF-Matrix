@@ -63,7 +63,7 @@ namespace IVSparse {
     void IVCSC<T, columnMajor>::write(char* filename) {
 
         std::string file = std::string(filename);
-        if (strcasestr(filename, ".ivcsc") == NULL) {
+        if (strstr(filename, ".ivcsc") == NULL) {
             file += std::string(".ivcsc");
             // strcat(filename, ".vcsc");
         }
@@ -75,13 +75,13 @@ namespace IVSparse {
         fwrite(metadata, 1, META_DATA_SIZE, fp);
 
         // write the size of each vector
-        for (uint32_t i = 0; i < outerDim; i++) {
+        for (size_t i = 0; i < outerDim; i++) {
             uint64_t size = (uint8_t*)endPointers[i] - (uint8_t*)data[i];
             fwrite(&size, 1, sizeof(uint64_t), fp);
         }
 
         // write each vector
-        for (uint32_t i = 0; i < outerDim; i++) {
+        for (size_t i = 0; i < outerDim; i++) {
             fwrite(data[i], 1, (char*)endPointers[i] - (char*)data[i], fp);
         }
 
@@ -90,6 +90,19 @@ namespace IVSparse {
     }
     #endif
     
+    template <typename T, bool columnMajor>
+    void IVCSC<T, columnMajor>::write(const char* filename) {
+
+        write((char*)filename);
+
+    }
+
+    template<typename T, bool columnMajor>
+    void IVCSC<T, columnMajor>::write(std::string filename) {
+
+        write(filename.c_str());
+
+    }
 
     template <typename T, bool columnMajor>
     void IVCSC<T, columnMajor>::read(char* filename) {
@@ -98,6 +111,19 @@ namespace IVSparse {
 
     }
 
+    template <typename T, bool columnMajor>
+    void IVCSC<T, columnMajor>::read(const char* filename) {
+
+        *this = IVCSC<T, columnMajor>((char*)filename);
+
+    }
+
+    template <typename T, bool columnMajor>
+    void IVCSC<T, columnMajor>::read(std::string filename) {
+
+        *this = IVCSC<T, columnMajor>(filename.c_str());
+
+    }
 
     // Prints the matrix dense to console
     template<typename T, bool columnMajor>
@@ -106,8 +132,8 @@ namespace IVSparse {
         std::cout << "IVCSC Matrix" << std::endl;
 
         // print the first 100 rows and columns
-        for (uint32_t i = 0; i < 100 && i < numRows; i++) {
-            for (uint32_t j = 0; j < 100 && j < numCols; j++) {
+        for (size_t i = 0; i < 100 && i < numRows; i++) {
+            for (size_t j = 0; j < 100 && j < numCols; j++) {
                 std::cout << static_cast<int>(coeff(i, j)) << " ";
             }
             std::cout << std::endl;
@@ -130,10 +156,11 @@ namespace IVSparse {
         colPtrs[0] = 0;
 
         // make an array of ordered maps to hold the data
-        std::map<indexT, T> dict[outerDim];
+        // std::map<indexT, T> dict[outerDim];
+        std::map<indexT, T>* dict = (std::map<indexT, T>*)malloc(outerDim * sizeof(std::map<indexT, T>));
 
         // iterate through the data using the iterator
-        for (uint32_t i = 0; i < outerDim; ++i) {
+        for (size_t i = 0; i < outerDim; ++i) {
             size_t count = 0;
 
             for (typename IVCSC<T, columnMajor>::InnerIterator it(*this, i); it; ++it) {
@@ -147,13 +174,14 @@ namespace IVSparse {
         size_t count = 0;
 
         // loop through the dictionary and populate values and indices
-        for (uint32_t i = 0; i < outerDim; ++i) {
+        for (size_t i = 0; i < outerDim; ++i) {
             for (auto& pair : dict[i]) {
                 values[count] = pair.second;
                 indices[count] = pair.first;
                 count++;
             }
         }
+        free(dict);
 
         // return a VCSC matrix from the CSC vectors
         typename IVSparse::VCSC<T, indexT, columnMajor> mat(values, indices, colPtrs, numRows, numCols, nnz);
@@ -179,7 +207,7 @@ namespace IVSparse {
         Eigen::SparseMatrix<T, columnMajor ? Eigen::ColMajor : Eigen::RowMajor> eigenMatrix(numRows, numCols);
         // eigenMatrix.reserve(Eigen::VectorXi::Constant(numCols, nnz / numCols));
 
-        for (uint32_t i = 0; i < outerDim; ++i) {
+        for (size_t i = 0; i < outerDim; ++i) {
             // check if the vector is empty
             if (data[i] == nullptr) {
                 continue;
@@ -202,7 +230,7 @@ namespace IVSparse {
         // std::vector<Eigen::Triplet<T>> triplets(nnz);
 
         // #pragma omp parallel for reduction(merge: triplets)
-        // for (uint32_t i = 0; i < outerDim; ++i) {
+        // for (size_t i = 0; i < outerDim; ++i) {
         //     // check if the vector is empty
         //     if (data[i] == nullptr) {
         //         continue;
@@ -261,7 +289,7 @@ namespace IVSparse {
         }
 
         // deep copy the data
-        for (uint32_t i = 0; i < outerDim - oldOuterDim; ++i) {
+        for (size_t i = 0; i < outerDim - oldOuterDim; ++i) {
             try {
                 data[oldOuterDim + i] = malloc(mat.getVectorByteSize(i));
                 endPointers[oldOuterDim + i] = (char*)data[oldOuterDim + i] + mat.getVectorByteSize(i);
@@ -304,7 +332,7 @@ namespace IVSparse {
         mapsT.resize(innerDim);
         // populate the transpose data structure
 
-        for (uint32_t i = 0; i < outerDim; ++i) {
+        for (size_t i = 0; i < outerDim; ++i) {
             for (typename IVCSC<T, columnMajor>::InnerIterator it(*this, i); it; ++it) {
                 mapsT[it.getIndex()][it.value()].push_back(i);
             }
@@ -316,7 +344,7 @@ namespace IVSparse {
                 size_t max = col.second[0];
 
                 // delta encode the vector
-                for (uint32_t i = col.second.size() - 1; i > 0; --i) {
+                for (size_t i = col.second.size() - 1; i > 0; --i) {
                     col.second[i] -= col.second[i - 1];
                     if ((size_t)col.second[i] > max) max = col.second[i];
                 }
@@ -375,7 +403,7 @@ namespace IVSparse {
         }
 
         // copy the vectors
-        for (uint32_t i = start; i < end; ++i) {
+        for (size_t i = start; i < end; ++i) {
 
             try {
                 temp.data[i - start] = malloc(getVectorByteSize(i));

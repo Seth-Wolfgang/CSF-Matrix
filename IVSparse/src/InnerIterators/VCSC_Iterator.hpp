@@ -108,7 +108,7 @@ namespace IVSparse {
          //* Operator Overloads *//
 
          // Prefix increment operator
-        void __attribute__((hot)) operator++();
+        void operator++();
 
         // Equality operator
         bool operator==(const InnerIterator& other);
@@ -123,7 +123,7 @@ namespace IVSparse {
         bool operator>(const InnerIterator& other);
 
         // Boolean operator
-        inline __attribute__((hot)) operator bool() { return countIndex < indexSize; }
+        inline operator bool() { return countIndex < indexSize; }
 
         // Dereference operator
         T& operator*();

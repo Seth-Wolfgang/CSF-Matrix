@@ -73,7 +73,7 @@ namespace IVSparse {
     void VCSC<T, indexT, columnMajor>::write(char* filename) {
 
         std::string file = std::string(filename);
-        if (strcasestr(filename, ".vcsc") == NULL) {
+        if (strstr(filename, ".vcsc") == NULL) {
             file += std::string(".vcsc");
         }
 
@@ -85,25 +85,25 @@ namespace IVSparse {
 
 
         // write the lengths of the vectors
-        for (uint32_t i = 0; i < outerDim; ++i) {
+        for (size_t i = 0; i < outerDim; ++i) {
             fwrite(&valueSizes[i], 1, sizeof(indexT), fp);
         }
-        for (uint32_t i = 0; i < outerDim; ++i) {
+        for (size_t i = 0; i < outerDim; ++i) {
             fwrite(&indexSizes[i], 1, sizeof(indexT), fp);
         }
 
         // write the values
-        for (uint32_t i = 0; i < outerDim; ++i) {
+        for (size_t i = 0; i < outerDim; ++i) {
             fwrite(values[i], 1, valueSizes[i] * sizeof(T), fp);
         }
 
         // write the counts
-        for (uint32_t i = 0; i < outerDim; ++i) {
+        for (size_t i = 0; i < outerDim; ++i) {
             fwrite(counts[i], 1, valueSizes[i] * sizeof(indexT), fp);
         }
 
         // write the indices
-        for (uint32_t i = 0; i < outerDim; ++i) {
+        for (size_t i = 0; i < outerDim; ++i) {
             fwrite(indices[i], 1, indexSizes[i] * sizeof(indexT), fp);
         }
         // close the file
@@ -112,12 +112,39 @@ namespace IVSparse {
     #endif
 
     template <typename T, typename indexT, bool columnMajor>
+    void VCSC<T, indexT, columnMajor>::write(const char* filename) {
+
+        write((char*)filename);
+
+    }
+
+    template <typename T, typename indexT, bool columnMajor>
+    void VCSC<T, indexT, columnMajor>::write(std::string filename) {
+
+        write(filename.c_str());
+
+    }
+
+    template <typename T, typename indexT, bool columnMajor>
     void VCSC<T, indexT, columnMajor>::read(char* filename) {
 
         *this = VCSC<T, indexT, columnMajor>(filename);
 
     }
 
+    template <typename T, typename indexT, bool columnMajor>
+    void VCSC<T, indexT, columnMajor>::read(const char* filename) {
+
+        *this = VCSC<T, indexT, columnMajor>((char*)filename);
+
+    }
+
+    template <typename T, typename indexT, bool columnMajor>
+    void VCSC<T, indexT, columnMajor>::read(std::string filename) {
+
+        *this = VCSC<T, indexT, columnMajor>(filename.c_str());
+
+    }
 
     // Prints the matrix dense to console
     template <typename T, typename indexT, bool columnMajor>
@@ -126,8 +153,8 @@ namespace IVSparse {
         std::cout << "VCSC Matrix" << std::endl;
 
         // print the first 100 rows and columns
-        for (uint32_t i = 0; i < 100 && i < numRows; i++) {
-            for (uint32_t j = 0; j < 100 && j < numCols; j++) {
+        for (size_t i = 0; i < 100 && i < numRows; i++) {
+            for (size_t j = 0; j < 100 && j < numCols; j++) {
                 std::cout << static_cast<int>(coeff(i, j)) << " ";
             }
             std::cout << std::endl;
@@ -146,10 +173,11 @@ namespace IVSparse {
         colPtrs[0] = 0;
 
         // make an array of ordered maps to hold the data
-        std::map<indexT, T> dict[outerDim];
+        // std::map<indexT, T> dict[outerDim];
+        std::map<indexT, T>* dict = (std::map<indexT, T>*)malloc(outerDim * sizeof(std::map<indexT, T>));
 
         // iterate through the data using the iterator
-        for (uint32_t i = 0; i < outerDim; ++i) {
+        for (size_t i = 0; i < outerDim; ++i) {
             size_t count = 0;
 
             for (typename VCSC<T, indexT, columnMajor>::InnerIterator it(*this, i); it; ++it) {
@@ -161,13 +189,14 @@ namespace IVSparse {
         size_t count = 0;
 
         // loop through the dictionary and populate values and indices
-        for (uint32_t i = 0; i < outerDim; ++i) {
+        for (size_t i = 0; i < outerDim; ++i) {
             for (auto& pair : dict[i]) {
                 values[count] = pair.second;
                 indices[count] = pair.first;
                 count++;
             }
         }
+        free(dict);
 
         // return a IVCSC matrix from the CSC vectors
         IVSparse::IVCSC<T, columnMajor> mat(values, indices, colPtrs, numRows, numCols, nnz);
@@ -198,7 +227,7 @@ namespace IVSparse {
         // #ifdef IVSPARSE_HAS_OPENMP
         // #pragma omp parallel for
         // #endif
-        for (uint32_t i = 0; i < outerDim; ++i) {
+        for (size_t i = 0; i < outerDim; ++i) {
             for (typename VCSC<T, indexT, columnMajor>::InnerIterator it(*this, i); it; ++it) {
                 // add the value to the matrix
                 eigenMatrix.insert(it.row(), it.col()) = it.value();
@@ -258,7 +287,7 @@ namespace IVSparse {
         #ifdef IVSPARSE_HAS_OPENMP
         #pragma omp parallel for
         #endif
-        for (uint32_t i = 0; i < outerDim - oldOuterDim; ++i) {
+        for (size_t i = 0; i < outerDim - oldOuterDim; ++i) {
             valueSizes[oldOuterDim + i] = mat.getNumUniqueVals(i);
             indexSizes[oldOuterDim + i] = mat.getNumIndices(i);
 
@@ -308,7 +337,7 @@ namespace IVSparse {
         std::vector<std::unordered_map<T, std::vector<indexT>>> mapsT(innerDim);
         mapsT.resize(innerDim);
 
-        for (uint32_t i = 0; i < outerDim; ++i) {
+        for (size_t i = 0; i < outerDim; ++i) {
             for (typename VCSC<T, indexT, columnMajor>::InnerIterator it(*this, i); it; ++it) {
                 mapsT[it.getIndex()][it.value()].push_back(i);
             }

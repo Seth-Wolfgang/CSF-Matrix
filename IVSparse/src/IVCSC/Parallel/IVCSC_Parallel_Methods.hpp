@@ -17,7 +17,7 @@ namespace IVSparse {
         #ifdef IVSPARSE_HAS_OPENMP
         #pragma omp parallel for
         #endif
-        for (uint32_t i = 0; i < outerDim; ++i) {
+        for (size_t i = 0; i < outerDim; ++i) {
             for (typename IVCSC<T, columnMajor>::InnerIterator it(*this, i); it; ++it) {
                 std::lock_guard lock(mutexList[it.getIndex()]);
                 mapsT[it.getIndex()][it.value()].push_back(i);
@@ -31,7 +31,7 @@ namespace IVSparse {
                 size_t max = col.second[0];
 
                 // delta encode the vector
-                for (uint32_t i = col.second.size() - 1; i > 0; --i) {
+                for (size_t i = col.second.size() - 1; i > 0; --i) {
                     col.second[i] -= col.second[i - 1];
                     if ((size_t)col.second[i] > max) max = col.second[i];
                 }
@@ -71,7 +71,7 @@ namespace IVSparse {
 
         // Calculate the size of each vector and write the size of each vector
         #pragma omp parallel for 
-        for (uint32_t i = 0; i < outerDim; i++) {
+        for (size_t i = 0; i < outerDim; i++) {
             sizeDelta[i] = (uint8_t*)endPointers[i] - (uint8_t*)data[i];
             pwrite(fileno(fp), &sizeDelta[i], sizeof(uint64_t), META_DATA_SIZE + (i * 8)); // axis pointer (size of axis for parallel read)
         }
@@ -79,7 +79,7 @@ namespace IVSparse {
         // calculate the start of each vector from the beginning of the file
         sizes[0] = META_DATA_SIZE + (outerDim * 8);
 
-        for (uint32_t i = 0; i < outerDim; i++) {
+        for (size_t i = 0; i < outerDim; i++) {
             sizes[i + 1] = sizes[i] + sizeDelta[i];
         }
         free(sizeDelta);
@@ -87,7 +87,7 @@ namespace IVSparse {
 
         // write the size of each vector
         #pragma omp parallel for
-        for (uint32_t i = 0; i < outerDim; i++) {
+        for (size_t i = 0; i < outerDim; i++) {
             pwrite(fileno(fp), data[i], (uint8_t*)endPointers[i] - (uint8_t*)data[i], sizes[i]); // data
         }
 

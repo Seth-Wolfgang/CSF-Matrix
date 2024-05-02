@@ -17,19 +17,19 @@ namespace IVSparse {
         if (this != &other) {
             // free the old data
             if (values != nullptr) {
-                for (uint32_t i = 0; i < outerDim; i++) {
+                for (size_t i = 0; i < outerDim; i++) {
                     if (values[i] != nullptr) free(values[i]);
                 }
                 free(values);
             }
             if (counts != nullptr) {
-                for (uint32_t i = 0; i < outerDim; i++) {
+                for (size_t i = 0; i < outerDim; i++) {
                     if (counts[i] != nullptr) free(counts[i]);
                 }
                 free(counts);
             }
             if (indices != nullptr) {
-                for (uint32_t i = 0; i < outerDim; i++) {
+                for (size_t i = 0; i < outerDim; i++) {
                     if (indices[i] != nullptr) free(indices[i]);
                 }
                 free(indices);
@@ -78,7 +78,7 @@ namespace IVSparse {
             index_t = other.index_t;
 
             // copy the data
-            for (uint32_t i = 0; i < outerDim; i++) {
+            for (size_t i = 0; i < outerDim; i++) {
                 try {
                     values[i] = (T*)malloc(other.valueSizes[i] * sizeof(T));
                     counts[i] = (indexT*)malloc(other.valueSizes[i] * sizeof(indexT));
@@ -125,14 +125,14 @@ namespace IVSparse {
         }
 
         // check the value array
-        for (uint32_t i = 0; i < outerDim; i++) {
+        for (size_t i = 0; i < outerDim; i++) {
             if (memcmp(values[i], other.values[i], sizeof(T) * valueSizes[i]) != 0) {
                 return false;
             }
         }
 
         // check the index array
-        for (uint32_t i = 0; i < outerDim; i++) {
+        for (size_t i = 0; i < outerDim; i++) {
             if (memcmp(indices[i], other.indices[i], sizeof(indexT) * indexSizes[i]) !=
                 0) {
                 return false;
@@ -140,7 +140,7 @@ namespace IVSparse {
         }
 
         // check the count array
-        for (uint32_t i = 0; i < outerDim; i++) {
+        for (size_t i = 0; i < outerDim; i++) {
             if (memcmp(counts[i], other.counts[i], sizeof(indexT) * valueSizes[i]) !=
                 0) {
                 return false;
@@ -225,7 +225,7 @@ namespace IVSparse {
         Eigen::Matrix<T, -1, -1> matTranspose = mat.transpose();
 
         // orientation of Sparse * Dense)
-        for (uint32_t i = 0; i < outerDim; ++i) {
+        for (size_t i = 0; i < outerDim; ++i) {
             for (typename VCSC<T, indexT, columnMajor>::InnerIterator matIter(*this, i); matIter; ++matIter) {
                 if constexpr (columnMajor) {
                     newMatrix.col(matIter.getIndex()) += matTranspose.col(i) * matIter.value();
@@ -256,7 +256,7 @@ namespace IVSparse {
 
         // Fix Parallelism issue (race condition because of partial sums and
         // orientation of Sparse * Dense)
-        for (uint32_t col = 0; col < numCols; col++) {
+        for (size_t col = 0; col < numCols; col++) {
             for (typename VCSC<T, indexT, columnMajor>::InnerIterator matIter(*this, col); matIter; ++matIter) {
                 newMatrix.col(matIter.row()) += matTranspose.col(col) * matIter.value();
             }
@@ -279,7 +279,7 @@ namespace IVSparse {
 
         // iterate over the vector and multiply the corresponding row of the matrix by the vecIter value
 
-        for (uint32_t i = 0; i < outerDim; i++) {
+        for (size_t i = 0; i < outerDim; i++) {
             for (typename VCSC<T, indexT, columnMajor>::InnerIterator matIter(*this, i); matIter; ++matIter) {
                 eigenTemp(matIter.row()) += vec(matIter.col()) * matIter.value();
             }
