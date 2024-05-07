@@ -308,7 +308,7 @@ namespace IVSparse {
 
     // Eigen -> IVSparse append
     template<typename T, bool columnMajor>
-    inline void IVSparse::IVCSC<T, columnMajor>::append(Eigen::SparseMatrix<T, columnMajor ? Eigen::ColMajor : Eigen::RowMajor>& mat) {
+    void IVSparse::IVCSC<T, columnMajor>::append(Eigen::SparseMatrix<T, columnMajor ? Eigen::ColMajor : Eigen::RowMajor>& mat) {
         IVCSC<T, columnMajor> temp(mat);
         append(temp);
     }
@@ -316,7 +316,7 @@ namespace IVSparse {
     // Raw CSC -> IVSparse append
     template<typename T, bool columnMajor>
     template <typename T2, typename indexT>
-    inline void IVSparse::IVCSC<T, columnMajor>::append(T2* vals, indexT* innerIndices, indexT* outerPtr, uint32_t num_rows, uint32_t num_cols, uint32_t nnz) {
+    void IVSparse::IVCSC<T, columnMajor>::append(T2* vals, indexT* innerIndices, indexT* outerPtr, uint32_t num_rows, uint32_t num_cols, uint32_t nnz) {
         IVCSC<T, columnMajor> temp(vals, innerIndices, outerPtr, num_rows, num_cols, nnz);
         append(temp);
     }

@@ -154,7 +154,7 @@ namespace IVSparse {
         assert(num_rows > 0 && num_cols > 0 && nnz > 0 &&
                "Error: Matrix dimensions must be greater than 0");
         #endif
-
+    
         // see if the matrix is empty
         if (nnz == 0) {
             *this = VCSC<T, indexT, columnMajor>();
@@ -169,6 +169,7 @@ namespace IVSparse {
             innerDim = num_cols;
             outerDim = num_rows;
         }
+    
 
         numRows = num_rows;
         numCols = num_cols;
@@ -183,6 +184,7 @@ namespace IVSparse {
         metadata[3] = nnz;
         metadata[4] = val_t;
         metadata[5] = index_t;
+     
 
         // allocate the vectors
         try {
@@ -197,6 +199,7 @@ namespace IVSparse {
             throw std::runtime_error("Error: Could not allocate memory");
         }
 
+
         // sort the tuples by first by column then by row
         std::sort(entries.begin(), entries.end(),
                   [](const std::tuple<indexT2, indexT2, T2>& a,
@@ -208,24 +211,29 @@ namespace IVSparse {
                 return std::get<1>(a) < std::get<1>(b);
             }
         });
+        std::cout << "Here4\n";
 
         // std::map<T2, std::vector<indexT2>> maps[outerDim];
-        std::map<T2, std::vector<indexT2>>* maps = (std::map<T2, std::vector<indexT2>>*)malloc(sizeof(std::map<T2, std::vector<indexT2>>) * outerDim);
+        // std::map<T2, std::vector<indexT2>>* maps = (std::map<T2, std::vector<indexT2>>*)malloc(sizeof(std::map<T2, std::vector<indexT2>>) * outerDim);
+        std::vector<std::map<T2, std::vector<indexT2>>> maps(outerDim);
 
+  
         // loop through the tuples
         for (size_t i = 0; i < nnz; i++) {
             // get the column
             indexT2 row = std::get<0>(entries[i]);
             indexT2 col = std::get<1>(entries[i]);
             T2 val = std::get<2>(entries[i]);
+           
 
             // check if the value is already in the map
             if (maps[col].find(val) != maps[col].end()) {
-                // value found positive delta encode it
+                // value found positive delta encode it            
                 maps[col][val].push_back(row);
             }
             else {
                 // value not found
+        
                 maps[col][val] = std::vector<indexT2>{ row };
             }
 
@@ -284,7 +292,7 @@ namespace IVSparse {
             }
 
         }  // end of loop through the array
-        free(maps);
+        // free(maps);
         
         // run the user checks and calculate the compression size
         calculateCompSize();

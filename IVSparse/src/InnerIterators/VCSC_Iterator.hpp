@@ -123,7 +123,7 @@ namespace IVSparse {
         bool operator>(const InnerIterator& other);
 
         // Boolean operator
-        inline operator bool() { return countIndex < indexSize; }
+        operator bool() { return countIndex < indexSize; }
 
         // Dereference operator
         T& operator*();

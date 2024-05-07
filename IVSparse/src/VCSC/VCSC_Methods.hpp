@@ -287,7 +287,7 @@ namespace IVSparse {
         #ifdef IVSPARSE_HAS_OPENMP
         #pragma omp parallel for
         #endif
-        for (size_t i = 0; i < outerDim - oldOuterDim; ++i) {
+        for (int64_t i = 0; i < outerDim - oldOuterDim; ++i) {
             valueSizes[oldOuterDim + i] = mat.getNumUniqueVals(i);
             indexSizes[oldOuterDim + i] = mat.getNumIndices(i);
 
@@ -314,7 +314,7 @@ namespace IVSparse {
 
     // Eigen -> IVSparse append
     template<typename T, typename indexT, bool columnMajor>
-    inline void IVSparse::VCSC<T, indexT, columnMajor>::append(Eigen::SparseMatrix<T, columnMajor ? Eigen::ColMajor : Eigen::RowMajor>& mat) {
+    void IVSparse::VCSC<T, indexT, columnMajor>::append(Eigen::SparseMatrix<T, columnMajor ? Eigen::ColMajor : Eigen::RowMajor>& mat) {
         VCSC<T, indexT, columnMajor> temp(mat);
         append(temp);
     }
@@ -322,7 +322,7 @@ namespace IVSparse {
     // Raw CSC -> IVSparse append
     template<typename T, typename indexT, bool columnMajor>
     template<typename T2, typename indexT2>
-    inline void IVSparse::VCSC<T, indexT, columnMajor>::append(T2* vals, indexT2* innerIndices, indexT2* outerPtr, uint32_t num_rows, uint32_t num_cols, uint32_t nnz) {
+    void IVSparse::VCSC<T, indexT, columnMajor>::append(T2* vals, indexT2* innerIndices, indexT2* outerPtr, uint32_t num_rows, uint32_t num_cols, uint32_t nnz) {
         VCSC<T, indexT, columnMajor> temp(vals, innerIndices, outerPtr, num_rows, num_cols, nnz);
         append(temp);
     }

@@ -14,7 +14,7 @@ namespace IVSparse {
 
     // Matrix Constructor
     template<typename T, bool columnMajor>
-    inline IVCSC<T, columnMajor>::InnerIterator::InnerIterator(IVSparse::IVCSC<T, columnMajor>& matrix, uint32_t vec) {
+    IVCSC<T, columnMajor>::InnerIterator::InnerIterator(IVSparse::IVCSC<T, columnMajor>& matrix, uint32_t vec) {
         // check if the vector is out of bounds
         #ifdef IVSPARSE_DEBUG
         assert((vec < matrix.outerDim && vec >= 0) && "Vector index out of bounds.");
@@ -53,7 +53,7 @@ namespace IVSparse {
 
     // If the iterator is at a new run
     template<typename T, bool columnMajor>
-    inline bool IVCSC<T, columnMajor>::InnerIterator::isNewRun() {
+    bool IVCSC<T, columnMajor>::InnerIterator::isNewRun() {
         return firstIndex;
     }
 
@@ -77,7 +77,7 @@ namespace IVSparse {
 
     // Updates the value of the iterator to newValue
     template<typename T, bool columnMajor>
-    inline void IVCSC<T, columnMajor>::InnerIterator::coeff(T newValue) {
+    void IVCSC<T, columnMajor>::InnerIterator::coeff(T newValue) {
         *val = newValue;
     }
 
@@ -107,7 +107,7 @@ namespace IVSparse {
 
     // Index decoder
     template<typename T, bool columnMajor>
-    inline void IVCSC<T, columnMajor>::InnerIterator::decodeIndex() {
+    void IVCSC<T, columnMajor>::InnerIterator::decodeIndex() {
         switch (indexWidth) {
         case 1:
             newIndex = static_cast<size_t>(*static_cast<uint8_t*>(data));

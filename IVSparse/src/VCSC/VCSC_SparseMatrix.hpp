@@ -341,49 +341,6 @@ namespace IVSparse {
          */
         inline double norm();
 
-        // /**
-        //  * @returns a matrix containging the elementwise sum of the two matrices.
-        // */
-        // Eigen::Matrix<T, -1, -1> addTo(Eigen::Matrix<T, -1, -1>& eigen);
-
-        // /**
-        //  * @returns adds the elementwise sum of the two matrices to the input matrix.
-        // */
-        // void addTo(Eigen::Matrix<T, -1, -1>& eigen);
-
-        // /**
-        //  * @returns a matrix containging the elementwise difference of the two matrices.
-        // */
-        // Eigen::Matrix<T, -1, -1> subtractFrom(Eigen::Matrix<T, -1, -1>& eigen);
-
-        // /**
-        //  * @returns subtracts the elementwise difference of the two matrices from the input matrix.
-        // */
-        // void subtractFrom(Eigen::Matrix<T, -1, -1>& eigen);
-
-        // /**
-        //  * @returns a matrix containging the elementwise product of the two matrices.
-        // */
-        // Eigen::Matrix<T, -1, -1> multiplyBy(Eigen::Matrix<T, -1, -1>& eigen);
-
-        // /**
-        //  * @returns multiplies the elementwise product of the two matrices to the input matrix.
-        // */
-
-        // void multiplyBy(Eigen::Matrix<T, -1, -1>& eigen);
-
-        // /**
-        //  * @returns a matrix containging the elementwise division of the two matrices.
-        // */
-
-        // Eigen::Matrix<T, -1, -1> divideBy(Eigen::Matrix<T, -1, -1>& eigen);
-
-        // /**
-        //  * @returns divides the elementwise division of the two matrices to the input matrix.
-        // */
-
-        // void divideBy(Eigen::Matrix<T, -1, -1>& eigen);
-
         /**
          * @returns Returns the length of the specified vector.
          */
@@ -481,7 +438,7 @@ namespace IVSparse {
          * matrix. This converts the Eigen::SparseMatrix to an IVSparse matrix.
          */
 
-        inline void append(Eigen::SparseMatrix<T, columnMajor ? Eigen::ColMajor : Eigen::RowMajor>& mat);
+        void append(Eigen::SparseMatrix<T, columnMajor ? Eigen::ColMajor : Eigen::RowMajor>& mat);
 
         /**
          * @brief Appends a raw CSC matrix to the current matrix. Assumes correct storage order.
@@ -495,7 +452,7 @@ namespace IVSparse {
          * @param nnz
          */
         template <typename T2, typename indexT2>
-        inline void append(T2* vals, indexT2* innerIndices, indexT2* outerPtr, uint32_t num_rows, uint32_t num_cols, uint32_t nnz);
+        void append(T2* vals, indexT2* innerIndices, indexT2* outerPtr, uint32_t num_rows, uint32_t num_cols, uint32_t nnz);
 
 
         /**

@@ -215,7 +215,7 @@ namespace IVSparse {
 
     // Matrix Vector Multiplication (IVSparse Eigen -> Eigen)
     template <typename T, bool columnMajor>
-    inline Eigen::Matrix<T, -1, 1, !columnMajor> IVCSC<T, columnMajor>::operator*(const Eigen::Ref<const Eigen::Matrix<T, -1, 1>>& vec) {
+    Eigen::Matrix<T, -1, 1, !columnMajor> IVCSC<T, columnMajor>::operator*(const Eigen::Ref<const Eigen::Matrix<T, -1, 1>>& vec) {
 
         #ifdef IVSPARSE_DEBUG
         // check that the vector is the correct size

@@ -333,7 +333,7 @@ namespace IVSparse {
 
     // Calculates the sum of the matrix
     // template <typename std::is_floating_point<T>, typename indexT, bool columnMajor>
-    // inline double VCSC<T, indexT, columnMajor>::sum() {
+    // double VCSC<T, indexT, columnMajor>::sum() {
     //     T sum = 0;
     //     // std::vector<T> outerSum = this->outerSum();
 

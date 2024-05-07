@@ -129,7 +129,7 @@ namespace IVSparse {
         bool operator>(const InnerIterator& other);
 
         // Bool Operator
-        inline operator bool() {
+        operator bool() {
             return (static_cast<char*>(endPtr) - indexWidth > data);
         }
 

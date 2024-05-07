@@ -14,7 +14,7 @@ namespace IVSparse {
 
     // Matrix Constructor
     template <typename T, typename indexT, bool columnMajor>
-    inline VCSC<T, indexT, columnMajor>::InnerIterator::InnerIterator(IVSparse::VCSC<T, indexT, columnMajor>& matrix, uint32_t vec) {
+    VCSC<T, indexT, columnMajor>::InnerIterator::InnerIterator(IVSparse::VCSC<T, indexT, columnMajor>& matrix, uint32_t vec) {
 
         #ifdef IVSPARSE_DEBUG
         assert(vec < matrix.outerDim && vec >= 0 && "The vector index is out of bounds!");
@@ -73,7 +73,7 @@ namespace IVSparse {
 
     // Get a pointer to the value
     template <typename T, typename indexT, bool columnMajor>
-    inline void VCSC<T, indexT, columnMajor>::InnerIterator::coeff(
+    void VCSC<T, indexT, columnMajor>::InnerIterator::coeff(
         T newValue) {
         *val = newValue;
     }
@@ -134,7 +134,7 @@ namespace IVSparse {
 
     // Increment Operator
     template <typename T, typename indexT, bool columnMajor>
-    inline void VCSC<T, indexT, columnMajor>::InnerIterator::operator++() {
+    void VCSC<T, indexT, columnMajor>::InnerIterator::operator++() {
 
         // decriment count
         count--;

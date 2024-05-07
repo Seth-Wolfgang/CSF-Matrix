@@ -37,7 +37,6 @@ namespace IVSparse {
         else {
             return 8;
         }
-
     }
 
     // private ostream operator helper

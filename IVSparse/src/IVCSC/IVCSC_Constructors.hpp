@@ -285,8 +285,8 @@ namespace IVSparse {
         });
 
         // std::map<T2, std::vector<indexT>> maps[outerDim];
-        std::map<T2, std::vector<indexT>>* maps = (std::map<T2, std::vector<indexT>>*)malloc(outerDim * sizeof(std::map<T2, std::vector<indexT>>));
-
+        // std::map<T2, std::vector<indexT>>* maps = (std::map<T2, std::vector<indexT>>*)malloc(outerDim * sizeof(std::map<T2, std::vector<indexT>>));
+        std::vector<std::map<T2, std::vector<indexT>>> maps(outerDim);
 
         // loop through the tuples
         for (size_t i = 0; i < nnz; i++) {
@@ -416,7 +416,7 @@ namespace IVSparse {
 
             }  // End of dictionary loop
         }
-        free(maps);
+        // free(maps);
         // calculate the compression size
         calculateCompSize();
     }
@@ -688,7 +688,7 @@ namespace IVSparse {
         #ifdef IVSPARSE_HAS_OPENMP
         #pragma omp parallel for
         #endif
-        for (size_t i = 0; i < outerDim; i++) {
+        for (int64_t i = 0; i < outerDim; i++) {
             // check if the column is empty
             if (maps[i].empty()) [[unlikely]] {
                 data[i] = nullptr;
