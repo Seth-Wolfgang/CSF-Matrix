@@ -211,7 +211,6 @@ namespace IVSparse {
                 return std::get<1>(a) < std::get<1>(b);
             }
         });
-        std::cout << "Here4\n";
 
         // std::map<T2, std::vector<indexT2>> maps[outerDim];
         // std::map<T2, std::vector<indexT2>>* maps = (std::map<T2, std::vector<indexT2>>*)malloc(sizeof(std::map<T2, std::vector<indexT2>>) * outerDim);
